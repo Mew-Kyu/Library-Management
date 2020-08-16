@@ -17,7 +17,7 @@ public class Jdbc {
     // Kết nối vào SQLServer.
     // (Sử dụng thư viện điều khiển SQLJDBC)
 
-    public static Connection getSQLServerConnection()
+    public static Connection getConnection()
             throws SQLException, ClassNotFoundException {
         String hostName = "localhost";
         String sqlInstanceName = "SQLEXPRESS";
@@ -25,13 +25,13 @@ public class Jdbc {
         String userName = "sa";
         String password = "laym";
 
-        return getSQLServerConnection(hostName, sqlInstanceName,
+        return getConnection(hostName, sqlInstanceName,
                 database, userName, password);
     }
 
     // Trường hợp sử dụng SQLServer.
     // Và thư viện SQLJDBC.
-    public static Connection getSQLServerConnection(String hostName,
+    public static Connection getConnection(String hostName,
             String sqlInstanceName, String database, String userName,
             String password) throws ClassNotFoundException, SQLException {
         // Khai báo class Driver cho DB SQLServer

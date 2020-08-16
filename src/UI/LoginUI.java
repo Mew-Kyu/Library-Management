@@ -5,6 +5,14 @@
  */
 package UI;
 
+import Helper.Jdbc;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author nhlon
@@ -29,10 +37,10 @@ public class LoginUI extends javax.swing.JFrame {
     private void initComponents() {
 
         txtUser = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         lblUser = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Library Management System");
@@ -41,13 +49,6 @@ public class LoginUI extends javax.swing.JFrame {
         txtUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUserActionPerformed(evt);
-            }
-        });
-
-        txtPass.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
             }
         });
 
@@ -65,6 +66,8 @@ public class LoginUI extends javax.swing.JFrame {
         lblPass.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblPass.setText("Password:");
 
+        txtPass.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,20 +83,20 @@ public class LoginUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtUser)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUser))
-                .addGap(25, 25, 25)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPass)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnLogin)
                 .addGap(20, 20, 20))
@@ -106,12 +109,35 @@ public class LoginUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        if(txtUser.getText().equals("") || txtPass.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Login Failed !!");
+            txtUser.requestFocus();
+            return;
+        }else{
+            PreparedStatement ps;
+            ResultSet rs;
+            String uname = txtUser.getText();
+            String pass = String.valueOf(txtPass.getPassword());
+            String sql = "SELECT * FROM `THUTHU` WHERE `ACC` = ? AND `PASS` = ?";
+        
+            try {
+                ps = Jdbc.getConnection().prepareStatement(sql);
+                ps.setString(1, uname);
+                ps.setString(2, pass);
+                rs = ps.executeQuery();
+                if(rs.next()){
+                    new MainFrameUI().setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Account does not exist!!");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -156,7 +182,7 @@ public class LoginUI extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblUser;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
