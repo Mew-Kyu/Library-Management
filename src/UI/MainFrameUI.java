@@ -27,7 +27,7 @@ import javax.swing.table.JTableHeader;
 public class MainFrameUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form BanDoc
+     * Done
      */
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     BandocDAO bandocDAO = new BandocDAO();
