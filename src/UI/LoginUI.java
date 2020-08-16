@@ -89,15 +89,15 @@ public class LoginUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUser))
-                .addGap(27, 27, 27)
+                    .addComponent(lblUser)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPass)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPass))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLogin)
                 .addGap(20, 20, 20))
         );
@@ -119,10 +119,10 @@ public class LoginUI extends javax.swing.JFrame {
             ResultSet rs;
             String uname = txtUser.getText();
             String pass = String.valueOf(txtPass.getPassword());
-            String sql = "SELECT * FROM `THUTHU` WHERE `ACC` = ? AND `PASS` = ?";
+            String sql = "SELECT * FROM THUTHU WHERE ACC = ? AND PASS = ?";
         
             try {
-                ps = Jdbc.getConnection().prepareStatement(sql);
+                ps = Jdbc.getConnect().prepareStatement(sql);
                 ps.setString(1, uname);
                 ps.setString(2, pass);
                 rs = ps.executeQuery();
@@ -133,8 +133,6 @@ public class LoginUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Account does not exist!!");
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

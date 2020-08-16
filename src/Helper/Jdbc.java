@@ -14,40 +14,25 @@ import java.sql.SQLException;
  * @author nhlon
  */
 public class Jdbc {
-    // Kết nối vào SQLServer.
-    // (Sử dụng thư viện điều khiển SQLJDBC)
-
-    public static Connection getConnection()
-            throws SQLException, ClassNotFoundException {
-        String hostName = "localhost";
-        String sqlInstanceName = "SQLEXPRESS";
-        String database = "ThuVien";
-        String userName = "sa";
-        String password = "laym";
-
-        return getConnection(hostName, sqlInstanceName,
-                database, userName, password);
+    private  static Connection con;
+    
+    public static Connection getConnect(){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=ThuVien;Username=sa;Password=123");
+            
+        } catch (Exception e) {
+            System.out.println("Kết nối không thành công");
+        }
+        return con;
     }
-
-    // Trường hợp sử dụng SQLServer.
-    // Và thư viện SQLJDBC.
-    public static Connection getConnection(String hostName,
-            String sqlInstanceName, String database, String userName,
-            String password) throws ClassNotFoundException, SQLException {
-        // Khai báo class Driver cho DB SQLServer
-        // Việc này cần thiết với Java 5
-        // Java6 tự động tìm kiếm Driver thích hợp.
-        // Nếu bạn dùng Java6, thì ko cần dòng này cũng được.
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-        // Cấu trúc URL Connection dành cho SQLServer
-        // Ví dụ:
-        // jdbc:sqlserver://ServerIp:1433/SQLEXPRESS;databaseName=simplehr
-        String connectionURL = "jdbc:sqlserver://" + hostName + ":1433"
-                + ";instance=" + sqlInstanceName + ";databaseName=" + database;
-
-        Connection conn = DriverManager.getConnection(connectionURL, userName,
-                password);
-        return conn;
-    }
+    public static String testConnect() {
+        try{
+            con = Jdbc.getConnect();
+            return "Kết nối thành công";
+        }
+        catch(Exception e) {
+            return "Kết nối thất bại";
+        }
+    } 
 }

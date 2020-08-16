@@ -24,7 +24,7 @@ public class ThuthuDAO {
     //List User
     public ArrayList<Thuthu> memberList() throws SQLException, ClassNotFoundException {
         ArrayList<Thuthu> list = new ArrayList<>();
-        Connection con = Jdbc.getConnection();
+        Connection con = Jdbc.getConnect();
         Statement st;
         ResultSet rs;
 
