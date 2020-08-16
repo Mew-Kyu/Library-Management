@@ -5,8 +5,11 @@
  */
 package UI;
 
+import DAO.BandocDAO;
+import Model.Bandoc;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -18,12 +21,15 @@ public class MainFrameUI extends javax.swing.JFrame {
     /**
      * Creates new form BanDoc
      */
+    BandocDAO sqlbd = new BandocDAO();
     public MainFrameUI() {
         initComponents();
         setLocationRelativeTo(null);
         btnQlbandoc.doClick();
         tableHeader();
     }
+    
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,8 +78,9 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblMBĐ = new javax.swing.JLabel();
         chkHoantra = new javax.swing.JCheckBox();
         pnlBandoc = new javax.swing.JPanel();
+        btnAddBD = new javax.swing.JButton();
         lblMabandoc = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMBD = new javax.swing.JTextField();
         txtTenbandoc = new javax.swing.JTextField();
         lblTenbandoc = new javax.swing.JLabel();
         txtNgaysinh = new javax.swing.JTextField();
@@ -82,12 +89,15 @@ public class MainFrameUI extends javax.swing.JFrame {
         txtCCCD = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBandoc = new javax.swing.JTable();
-        lblSĐT = new javax.swing.JLabel();
-        txtSĐT = new javax.swing.JTextField();
+        lblSDT = new javax.swing.JLabel();
+        txtSDT = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtNgaytao = new javax.swing.JTextField();
         lblNgaytao = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnFind = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lirbary Management System");
@@ -227,35 +237,36 @@ public class MainFrameUI extends javax.swing.JFrame {
             pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTailieuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTailieuLayout.createSequentialGroup()
-                        .addComponent(lblTentailieu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTailieuLayout.createSequentialGroup()
-                        .addComponent(lblMatailieu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTailieuLayout.createSequentialGroup()
-                        .addComponent(lblLoai)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlTailieuLayout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(lblNguon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(lblVitri)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(143, 143, 143))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTailieuLayout.createSequentialGroup()
+                                .addComponent(lblTentailieu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlTailieuLayout.createSequentialGroup()
+                                .addComponent(lblMatailieu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlTailieuLayout.createSequentialGroup()
+                                .addComponent(lblLoai)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTailieuLayout.createSequentialGroup()
+                                .addGap(122, 122, 122)
+                                .addComponent(lblNguon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
+                                .addGap(103, 103, 103)
+                                .addComponent(lblVitri)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(117, 117, 117)))
+                .addContainerGap())
         );
         pnlTailieuLayout.setVerticalGroup(
             pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +287,7 @@ public class MainFrameUI extends javax.swing.JFrame {
                 .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLoai)
                     .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -359,11 +370,12 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addComponent(lblNgaymuon)
                     .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHoantra)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkHoantra, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMBĐ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMBĐ))
+                    .addComponent(txtMBĐ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblHoantra)
+                        .addComponent(lblMBĐ)))
                 .addGap(26, 26, 26)
                 .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMTL)
@@ -375,10 +387,22 @@ public class MainFrameUI extends javax.swing.JFrame {
 
         pnlMain.add(pnlPhieumuon, "card4");
 
+        btnAddBD.setText("Thêm");
+        btnAddBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBDActionPerformed(evt);
+            }
+        });
+
         lblMabandoc.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblMabandoc.setText("Mã bạn đọc");
 
-        jTextField1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMBD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMBDActionPerformed(evt);
+            }
+        });
 
         txtTenbandoc.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
@@ -409,10 +433,15 @@ public class MainFrameUI extends javax.swing.JFrame {
             tblBandoc.getColumnModel().getColumn(6).setHeaderValue("Ngày tạo");
         }
 
-        lblSĐT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblSĐT.setText("SĐT");
+        lblSDT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblSDT.setText("SĐT");
 
-        txtSĐT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtSDT.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtSDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSDTActionPerformed(evt);
+            }
+        });
 
         lblEmail.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblEmail.setText("Email");
@@ -423,6 +452,27 @@ public class MainFrameUI extends javax.swing.JFrame {
 
         lblNgaytao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblNgaytao.setText("Ngày tạo");
+
+        btnUpdate.setText("Sửa");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Xoá");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnFind.setText("Tìm");
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBandocLayout = new javax.swing.GroupLayout(pnlBandoc);
         pnlBandoc.setLayout(pnlBandocLayout);
@@ -442,7 +492,7 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addGroup(pnlBandocLayout.createSequentialGroup()
                         .addComponent(lblMabandoc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
                             .addComponent(lblCCCD)
@@ -461,39 +511,58 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addGroup(pnlBandocLayout.createSequentialGroup()
                         .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblNgaytao)
-                            .addComponent(lblSĐT))
+                            .addComponent(lblSDT))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSĐT, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
         pnlBandocLayout.setVerticalGroup(
             pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBandocLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMabandoc)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSĐT)
-                    .addComponent(txtSĐT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMabandoc)
+                            .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSDT)
+                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(btnAddBD)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenbandoc)
                     .addComponent(txtTenbandoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmail)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNgaysinh)
-                    .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNgaytao)
-                    .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCCCD)
-                    .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate))
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNgaysinh)
+                            .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNgaytao)
+                            .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCCCD)
+                            .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFind)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -509,9 +578,7 @@ public class MainFrameUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(pnlMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,6 +618,49 @@ public class MainFrameUI extends javax.swing.JFrame {
         pnlMain.repaint();
         pnlMain.revalidate();
     }//GEN-LAST:event_btnQlphieumuonActionPerformed
+
+    private void btnAddBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBDActionPerformed
+        String id = txtMBD.getText();
+        String ten = txtTenbandoc.getText();
+        String ngaysinh = txtNgaysinh.getText();
+        String cccd = txtCCCD.getText();
+        String sdt = txtSDT.getText();
+        String email = txtEmail.getText();
+        String ngaytao = txtNgaytao.getText();
+        Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
+        
+        sqlbd.insertBD(bd);
+    }//GEN-LAST:event_btnAddBDActionPerformed
+
+    private void txtMBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMBDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMBDActionPerformed
+
+    private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSDTActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        String id = txtMBD.getText();
+        String ten = txtTenbandoc.getText();
+        String ngaysinh = txtNgaysinh.getText();
+        String cccd = txtCCCD.getText();
+        String sdt = txtSDT.getText();
+        String email = txtEmail.getText();
+        String ngaytao = txtNgaytao.getText();
+        Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
+        
+        sqlbd.updateBD(bd);
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String id = txtMBD.getText();
+        sqlbd.deleteBD(id);
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        String ten = txtTenbandoc.getText();
+    }//GEN-LAST:event_btnFindActionPerformed
 
     /**
      * @param args the command line arguments
@@ -600,9 +710,13 @@ public class MainFrameUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddBD;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnFind;
     private javax.swing.JButton btnQlbandoc;
     private javax.swing.JButton btnQlphieumuon;
     private javax.swing.JButton btnQltailieu;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JCheckBox chkHoantra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -611,7 +725,6 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblCCCD;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblHoantra;
@@ -625,7 +738,7 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblNgaysinh;
     private javax.swing.JLabel lblNgaytao;
     private javax.swing.JLabel lblNguon;
-    private javax.swing.JLabel lblSĐT;
+    private javax.swing.JLabel lblSDT;
     private javax.swing.JLabel lblTenbandoc;
     private javax.swing.JLabel lblTentailieu;
     private javax.swing.JLabel lblTitle;
@@ -642,6 +755,7 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtCCCD;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLoai;
+    private javax.swing.JTextField txtMBD;
     private javax.swing.JTextField txtMBĐ;
     private javax.swing.JTextField txtMTL;
     private javax.swing.JTextField txtMahoadon;
@@ -650,7 +764,7 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtNgaysinh;
     private javax.swing.JTextField txtNgaytao;
     private javax.swing.JTextField txtNguon;
-    private javax.swing.JTextField txtSĐT;
+    private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTenbandoc;
     private javax.swing.JTextField txtTentailieu;
     private javax.swing.JTextField txtVitri;
