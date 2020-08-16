@@ -23,7 +23,7 @@ public class Jdbc {
         String sqlInstanceName = "SQLEXPRESS";
         String database = "ThuVien";
         String userName = "sa";
-        String password = "123";
+        String password = "laym";
 
         return getSQLServerConnection(hostName, sqlInstanceName,
                 database, userName, password);
