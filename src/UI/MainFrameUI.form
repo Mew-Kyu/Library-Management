@@ -435,12 +435,12 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lblMTL" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblMahoadon" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMBĐ" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMBD" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtMTL" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Component id="txtMBĐ" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Component id="txtMBD" min="-2" pref="220" max="-2" attributes="0"/>
                                   <Component id="txtMahoadon" min="-2" pref="220" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
@@ -470,21 +470,21 @@
                           <Component id="lblNgaymuon" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNgaymuon" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="chkHoantra" alignment="0" min="-2" pref="38" max="-2" attributes="0"/>
-                          <Component id="txtMBĐ" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblHoantra" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblMBĐ" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMBD" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtMBD" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblMTL" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtMTL" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="81" max="32767" attributes="0"/>
+                      <EmptySpace pref="100" max="32767" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="298" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -558,6 +558,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tblPhieumuonKeyReleased"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -599,14 +602,14 @@
                 <Property name="text" type="java.lang.String" value="Ho&#xe0;n tr&#x1ea3;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtMB&#x110;">
+            <Component class="javax.swing.JTextField" name="txtMBD">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblMB&#x110;">
+            <Component class="javax.swing.JLabel" name="lblMBD">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
@@ -639,7 +642,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTenbandoc" min="-2" max="-2" attributes="0"/>
@@ -649,70 +652,65 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="lblMabandoc" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtMBD" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Component id="txtMabandoc" min="-2" pref="220" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblCCCD" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtCCCD" min="-2" pref="220" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lblNgaysinh" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtNgaysinh" min="-2" pref="220" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lblCCCD" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtCCCD" min="-2" pref="220" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="lblNgaysinh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtNgaysinh" min="-2" pref="220" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtEmail" min="-2" pref="220" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblNgaytao" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblSDT" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtSDT" min="-2" pref="220" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtSDT" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Component id="txtNgaytao" min="-2" pref="220" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtEmail" min="-2" pref="220" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblNgaytao" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtNgaytao" min="-2" pref="220" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="53" max="32767" attributes="0"/>
+                      <EmptySpace pref="108" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnAddBD" max="32767" attributes="0"/>
                           <Component id="btnUpdate" max="32767" attributes="0"/>
                           <Component id="btnDelete" max="32767" attributes="0"/>
-                          <Component id="btnFind" max="32767" attributes="0"/>
+                          <Component id="btnFind" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblMabandoc" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtMBD" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblSDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtSDT" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="btnAddBD" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblMabandoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMabandoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSDT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSDT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddBD" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTenbandoc" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTenbandoc" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -720,29 +718,21 @@
                           <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblNgaysinh" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNgaysinh" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblNgaytao" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNgaytao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblCCCD" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCCCD" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnDelete" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnFind" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNgaysinh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNgaysinh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNgaytao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNgaytao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblCCCD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCCCD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnFind" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="10" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="298" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -752,6 +742,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnAddBD">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="20" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
               </Properties>
               <Events>
@@ -766,15 +759,18 @@
                 <Property name="text" type="java.lang.String" value="M&#xe3; b&#x1ea1;n &#x111;&#x1ecd;c"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtMBD">
+            <Component class="javax.swing.JTextField" name="txtMabandoc">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="18" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMBDActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMabandocActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTenbandoc">
               <Properties>
@@ -884,6 +880,12 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblBandocMouseClicked"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -937,6 +939,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnUpdate">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="20" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
               </Properties>
               <Events>
@@ -945,6 +950,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnDelete">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="20" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Xo&#xe1;"/>
               </Properties>
               <Events>
@@ -953,6 +961,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnFind">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="20" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="T&#xec;m"/>
               </Properties>
               <Events>

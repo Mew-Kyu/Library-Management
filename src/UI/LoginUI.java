@@ -67,6 +67,11 @@ public class LoginUI extends javax.swing.JFrame {
         lblPass.setText("Password:");
 
         txtPass.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +111,7 @@ public class LoginUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
+        btnLoginActionPerformed(evt);
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -130,13 +135,17 @@ public class LoginUI extends javax.swing.JFrame {
                     new MainFrameUI().setVisible(true);
                     this.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(this, "Account does not exist!!");
+                    JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại!!");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        btnLoginActionPerformed(evt);
+    }//GEN-LAST:event_txtPassActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,10 +6,16 @@
 package UI;
 
 import DAO.BandocDAO;
+import Helper.myModel;
 import Model.Bandoc;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -21,15 +27,18 @@ public class MainFrameUI extends javax.swing.JFrame {
     /**
      * Creates new form BanDoc
      */
-    BandocDAO sqlbd = new BandocDAO();
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    BandocDAO bandocDAO = new BandocDAO();
+
     public MainFrameUI() {
         initComponents();
         setLocationRelativeTo(null);
         btnQlbandoc.doClick();
         tableHeader();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        populateJtableBandoc();
     }
-    
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,13 +83,13 @@ public class MainFrameUI extends javax.swing.JFrame {
         txtNgaymuon = new javax.swing.JTextField();
         txtMahoadon = new javax.swing.JTextField();
         lblHoantra = new javax.swing.JLabel();
-        txtMBĐ = new javax.swing.JTextField();
-        lblMBĐ = new javax.swing.JLabel();
+        txtMBD = new javax.swing.JTextField();
+        lblMBD = new javax.swing.JLabel();
         chkHoantra = new javax.swing.JCheckBox();
         pnlBandoc = new javax.swing.JPanel();
         btnAddBD = new javax.swing.JButton();
         lblMabandoc = new javax.swing.JLabel();
-        txtMBD = new javax.swing.JTextField();
+        txtMabandoc = new javax.swing.JTextField();
         txtTenbandoc = new javax.swing.JTextField();
         lblTenbandoc = new javax.swing.JLabel();
         txtNgaysinh = new javax.swing.JTextField();
@@ -307,6 +316,11 @@ public class MainFrameUI extends javax.swing.JFrame {
                 "Mã phiếu mượn", "Mã bạn đọc", "Mã tài liệu", "Ngày mượn", "Hoàn trả"
             }
         ));
+        tblPhieumuon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblPhieumuonKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblPhieumuon);
 
         lblNgaymuon.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -322,10 +336,10 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblHoantra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblHoantra.setText("Hoàn trả");
 
-        txtMBĐ.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMBD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        lblMBĐ.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblMBĐ.setText("Mã bạn đọc");
+        lblMBD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblMBD.setText("Mã bạn đọc");
 
         chkHoantra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
@@ -343,11 +357,11 @@ public class MainFrameUI extends javax.swing.JFrame {
                         .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblMTL)
                             .addComponent(lblMahoadon)
-                            .addComponent(lblMBĐ))
+                            .addComponent(lblMBD))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMBĐ, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(127, 127, 127)
                         .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,24 +383,25 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNgaymuon)
                     .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkHoantra, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMBĐ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblHoantra)
-                        .addComponent(lblMBĐ)))
-                .addGap(26, 26, 26)
+                        .addComponent(lblMBD)
+                        .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
                 .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMTL)
                     .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pnlMain.add(pnlPhieumuon, "card4");
 
+        btnAddBD.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         btnAddBD.setText("Thêm");
         btnAddBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,10 +412,10 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblMabandoc.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblMabandoc.setText("Mã bạn đọc");
 
-        txtMBD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txtMBD.addActionListener(new java.awt.event.ActionListener() {
+        txtMabandoc.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMabandoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMBDActionPerformed(evt);
+                txtMabandocActionPerformed(evt);
             }
         });
 
@@ -427,6 +442,11 @@ public class MainFrameUI extends javax.swing.JFrame {
                 "Mã", "Tên", "Ngày sinh", "CCCD", "SĐT", "Email", "Ngày tạo"
             }
         ));
+        tblBandoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBandocMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblBandoc);
         if (tblBandoc.getColumnModel().getColumnCount() > 0) {
             tblBandoc.getColumnModel().getColumn(5).setHeaderValue("Email");
@@ -453,6 +473,7 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblNgaytao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblNgaytao.setText("Ngày tạo");
 
+        btnUpdate.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         btnUpdate.setText("Sửa");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -460,6 +481,7 @@ public class MainFrameUI extends javax.swing.JFrame {
             }
         });
 
+        btnDelete.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         btnDelete.setText("Xoá");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -467,6 +489,7 @@ public class MainFrameUI extends javax.swing.JFrame {
             }
         });
 
+        btnFind.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
         btnFind.setText("Tìm");
         btnFind.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,7 +506,7 @@ public class MainFrameUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(pnlBandocLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
+                .addGap(47, 47, 47)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBandocLayout.createSequentialGroup()
                         .addComponent(lblTenbandoc)
@@ -492,77 +515,70 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addGroup(pnlBandocLayout.createSequentialGroup()
                         .addComponent(lblMabandoc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
-                            .addComponent(lblCCCD)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlBandocLayout.createSequentialGroup()
-                            .addComponent(lblNgaysinh)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(103, 103, 103)
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
-                        .addComponent(lblEmail)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtMabandoc, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlBandocLayout.createSequentialGroup()
-                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblNgaytao)
-                            .addComponent(lblSDT))
+                        .addComponent(lblCCCD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addComponent(lblNgaysinh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBandocLayout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(lblSDT)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
+                                .addComponent(lblEmail)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBandocLayout.createSequentialGroup()
+                                .addComponent(lblNgaytao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39))
+                .addGap(47, 47, 47))
         );
         pnlBandocLayout.setVerticalGroup(
             pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBandocLayout.createSequentialGroup()
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBandocLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblMabandoc)
-                            .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSDT)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlBandocLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(btnAddBD)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMabandoc)
+                    .addComponent(txtMabandoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSDT)
+                    .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddBD))
+                .addGap(30, 30, 30)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenbandoc)
                     .addComponent(txtTenbandoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate))
-                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBandocLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNgaysinh)
-                            .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNgaytao)
-                            .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCCCD)
-                            .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlBandocLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnFind)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNgaysinh)
+                    .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNgaytao)
+                    .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete))
+                .addGap(30, 30, 30)
+                .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCCCD)
+                    .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFind))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -620,7 +636,7 @@ public class MainFrameUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQlphieumuonActionPerformed
 
     private void btnAddBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBDActionPerformed
-        String id = txtMBD.getText();
+        String id = txtMabandoc.getText();
         String ten = txtTenbandoc.getText();
         String ngaysinh = txtNgaysinh.getText();
         String cccd = txtCCCD.getText();
@@ -628,20 +644,21 @@ public class MainFrameUI extends javax.swing.JFrame {
         String email = txtEmail.getText();
         String ngaytao = txtNgaytao.getText();
         Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
-        
-        sqlbd.insertBD(bd);
+
+        bandocDAO.insertBD(bd);
+        refreshTableBandoc();
     }//GEN-LAST:event_btnAddBDActionPerformed
 
-    private void txtMBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMBDActionPerformed
+    private void txtMabandocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMabandocActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMBDActionPerformed
+    }//GEN-LAST:event_txtMabandocActionPerformed
 
     private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSDTActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        String id = txtMBD.getText();
+        String id = txtMabandoc.getText();
         String ten = txtTenbandoc.getText();
         String ngaysinh = txtNgaysinh.getText();
         String cccd = txtCCCD.getText();
@@ -649,18 +666,66 @@ public class MainFrameUI extends javax.swing.JFrame {
         String email = txtEmail.getText();
         String ngaytao = txtNgaytao.getText();
         Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
-        
-        sqlbd.updateBD(bd);
+
+        bandocDAO.updateBD(bd);
+        refreshTableBandoc();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        String id = txtMBD.getText();
-        sqlbd.deleteBD(id);
+        String id = txtMabandoc.getText();
+        bandocDAO.deleteBD(id);
+        refreshForm();
+        refreshTableBandoc();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        String ten = txtTenbandoc.getText();
+        if (txtTenbandoc.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy", "Lỗi chỗ này", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String ten = txtTenbandoc.getText();
+            ArrayList<Bandoc> bandocList = bandocDAO.BandocList();
+            for (int i = 0; i < bandocList.size(); i++) {
+                if (bandocList.get(i).getTENBD().equalsIgnoreCase("BacHo")) {
+                    System.out.println("Đã tìm thấy");
+                    txtMabandoc.setText(bandocList.get(i).getMBD());
+                    txtTenbandoc.setText(bandocList.get(i).getTENBD());
+                    txtNgaysinh.setText(bandocList.get(i).getNGAYSINH());
+                    txtCCCD.setText(bandocList.get(i).getCCCD());
+                    txtSDT.setText(bandocList.get(i).getSDT());
+                    txtEmail.setText(bandocList.get(i).getEMAIL());
+                    txtNgaytao.setText(bandocList.get(i).getNGAYTAO());
+                    break;
+                }else{
+                    System.out.println("Không thấy");
+                }
+            }
+        }
+
     }//GEN-LAST:event_btnFindActionPerformed
+
+    private void tblBandocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBandocMouseClicked
+        int rowIndex = tblBandoc.getSelectedRow();
+        txtMabandoc.setText(tblBandoc.getValueAt(rowIndex, 0).toString());
+        txtTenbandoc.setText(tblBandoc.getValueAt(rowIndex, 1).toString());
+        txtNgaysinh.setText(tblBandoc.getValueAt(rowIndex, 2).toString());
+        txtCCCD.setText(tblBandoc.getValueAt(rowIndex, 3).toString());
+        txtSDT.setText(tblBandoc.getValueAt(rowIndex, 4).toString());
+        txtEmail.setText(tblBandoc.getValueAt(rowIndex, 5).toString());
+        txtNgaytao.setText(tblBandoc.getValueAt(rowIndex, 6).toString());
+    }//GEN-LAST:event_tblBandocMouseClicked
+
+    private void tblPhieumuonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblPhieumuonKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
+            int rowIndex = tblBandoc.getSelectedRow();
+            txtMabandoc.setText(tblBandoc.getValueAt(rowIndex, 0).toString());
+            txtTenbandoc.setText(tblBandoc.getValueAt(rowIndex, 1).toString());
+            txtNgaysinh.setText(tblBandoc.getValueAt(rowIndex, 2).toString());
+            txtCCCD.setText(tblBandoc.getValueAt(rowIndex, 3).toString());
+            txtSDT.setText(tblBandoc.getValueAt(rowIndex, 4).toString());
+            txtEmail.setText(tblBandoc.getValueAt(rowIndex, 5).toString());
+            txtNgaytao.setText(tblBandoc.getValueAt(rowIndex, 6).toString());
+        }
+    }//GEN-LAST:event_tblPhieumuonKeyReleased
 
     /**
      * @param args the command line arguments
@@ -703,10 +768,49 @@ public class MainFrameUI extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public final void tableHeader() {
         JTableHeader nw = tblBandoc.getTableHeader();
         nw.setFont(new Font("Dialog", Font.PLAIN, 17));
+    }
+
+    public final void refreshForm() {
+        txtMabandoc.setText(null);
+        txtTenbandoc.setText(null);
+        txtNgaysinh.setText(null);
+        txtCCCD.setText(null);
+        txtSDT.setText(null);
+        txtEmail.setText(null);
+        txtNgaytao.setText(null);
+    }
+
+    public void populateJtableBandoc() {
+        ArrayList<Bandoc> bandocList = bandocDAO.BandocList();
+        String[] colNames = {"Mã", "Tên", "Ngày sinh", "CCCD", "SĐT", "Email", "Ngày tạo"};
+        Object[][] rows = new Object[bandocList.size()][7];
+
+        for (int i = 0; i < bandocList.size(); i++) {
+            rows[i][0] = bandocList.get(i).getMBD();
+            rows[i][1] = bandocList.get(i).getTENBD();
+            rows[i][2] = bandocList.get(i).getNGAYSINH();
+            rows[i][3] = bandocList.get(i).getCCCD();
+            rows[i][4] = bandocList.get(i).getSDT();
+            rows[i][5] = bandocList.get(i).getEMAIL();
+            rows[i][6] = bandocList.get(i).getNGAYTAO();
+
+            myModel mmd = new myModel(colNames, rows);
+            tblBandoc.setModel(mmd);
+            tblBandoc.setRowHeight(40);
+            tblBandoc.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        }
+    }
+
+    public void refreshTableBandoc() {
+        tblBandoc.setModel(new DefaultTableModel());
+        populateJtableBandoc();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -729,7 +833,7 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblHoantra;
     private javax.swing.JLabel lblLoai;
-    private javax.swing.JLabel lblMBĐ;
+    private javax.swing.JLabel lblMBD;
     private javax.swing.JLabel lblMTL;
     private javax.swing.JLabel lblMabandoc;
     private javax.swing.JLabel lblMahoadon;
@@ -749,15 +853,15 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlPhieumuon;
     private javax.swing.JPanel pnlTailieu;
-    private javax.swing.JTable tblBandoc;
+    public static javax.swing.JTable tblBandoc;
     private javax.swing.JTable tblPhieumuon;
     private javax.swing.JTable tblTailieu;
     private javax.swing.JTextField txtCCCD;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLoai;
     private javax.swing.JTextField txtMBD;
-    private javax.swing.JTextField txtMBĐ;
     private javax.swing.JTextField txtMTL;
+    public static javax.swing.JTextField txtMabandoc;
     private javax.swing.JTextField txtMahoadon;
     private javax.swing.JTextField txtMatailieu;
     private javax.swing.JTextField txtNgaymuon;

@@ -108,6 +108,9 @@
           <Font name="Dialog" size="15" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPassActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
