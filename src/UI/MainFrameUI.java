@@ -6,14 +6,16 @@
 package UI;
 
 import DAO.BandocDAO;
+import DAO.PhieuthuDAO;
+import DAO.TailieuDAO;
 import Helper.myModel;
 import Model.Bandoc;
-import java.awt.Color;
+import Model.Phieuthu;
+import Model.Tailieu;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -29,6 +31,8 @@ public class MainFrameUI extends javax.swing.JFrame {
      */
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     BandocDAO bandocDAO = new BandocDAO();
+    TailieuDAO tailieuDAO = new TailieuDAO();
+    PhieuthuDAO phieuthuDAO = new PhieuthuDAO();
 
     public MainFrameUI() {
         initComponents();
@@ -38,6 +42,8 @@ public class MainFrameUI extends javax.swing.JFrame {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         populateJtableBandoc();
+        populateJtableTailieu();
+        populateJtablePhieuthu();
     }
 
     /**
@@ -73,6 +79,10 @@ public class MainFrameUI extends javax.swing.JFrame {
         txtTentailieu = new javax.swing.JTextField();
         txtVitri = new javax.swing.JTextField();
         lblTentailieu = new javax.swing.JLabel();
+        btnFindTL = new javax.swing.JButton();
+        btnAddTL = new javax.swing.JButton();
+        btnUpdateTL = new javax.swing.JButton();
+        btnDeleteTL = new javax.swing.JButton();
         pnlPhieumuon = new javax.swing.JPanel();
         txtMTL = new javax.swing.JTextField();
         lblMTL = new javax.swing.JLabel();
@@ -85,7 +95,11 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblHoantra = new javax.swing.JLabel();
         txtMBD = new javax.swing.JTextField();
         lblMBD = new javax.swing.JLabel();
-        chkHoantra = new javax.swing.JCheckBox();
+        btnFindPT = new javax.swing.JButton();
+        btnAddPT = new javax.swing.JButton();
+        btnUpdatePT = new javax.swing.JButton();
+        btnDeletePT = new javax.swing.JButton();
+        txtHoantra = new javax.swing.JTextField();
         pnlBandoc = new javax.swing.JPanel();
         btnAddBD = new javax.swing.JButton();
         lblMabandoc = new javax.swing.JLabel();
@@ -104,9 +118,9 @@ public class MainFrameUI extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         txtNgaytao = new javax.swing.JTextField();
         lblNgaytao = new javax.swing.JLabel();
-        btnUpdate = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnFind = new javax.swing.JButton();
+        btnUpdateBD = new javax.swing.JButton();
+        btnDeleteBD = new javax.swing.JButton();
+        btnFindBD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Lirbary Management System");
@@ -218,6 +232,16 @@ public class MainFrameUI extends javax.swing.JFrame {
                 "Mã", "Tên", "Loại", "Nguồn", "Vị trí"
             }
         ));
+        tblTailieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTailieuMouseClicked(evt);
+            }
+        });
+        tblTailieu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblTailieuKeyReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblTailieu);
 
         lblNguon.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -240,63 +264,112 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblTentailieu.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblTentailieu.setText("Tên tài liệu");
 
+        btnFindTL.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnFindTL.setText("Tìm");
+        btnFindTL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindTLActionPerformed(evt);
+            }
+        });
+
+        btnAddTL.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnAddTL.setText("Thêm");
+        btnAddTL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTLActionPerformed(evt);
+            }
+        });
+
+        btnUpdateTL.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnUpdateTL.setText("Sửa");
+        btnUpdateTL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateTLActionPerformed(evt);
+            }
+        });
+
+        btnDeleteTL.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnDeleteTL.setText("Xoá");
+        btnDeleteTL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteTLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTailieuLayout = new javax.swing.GroupLayout(pnlTailieu);
         pnlTailieu.setLayout(pnlTailieuLayout);
         pnlTailieuLayout.setHorizontalGroup(
             pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTailieuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTailieuLayout.createSequentialGroup()
-                                .addComponent(lblTentailieu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlTailieuLayout.createSequentialGroup()
-                                .addComponent(lblMatailieu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlTailieuLayout.createSequentialGroup()
-                                .addComponent(lblLoai)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTailieuLayout.createSequentialGroup()
-                                .addGap(122, 122, 122)
-                                .addComponent(lblNguon)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
-                                .addGap(103, 103, 103)
-                                .addComponent(lblVitri)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(117, 117, 117)))
+                .addComponent(jScrollPane3)
                 .addContainerGap())
+            .addGroup(pnlTailieuLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTailieuLayout.createSequentialGroup()
+                        .addComponent(lblTentailieu)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTailieuLayout.createSequentialGroup()
+                        .addComponent(lblMatailieu)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTailieuLayout.createSequentialGroup()
+                        .addComponent(lblLoai)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTailieuLayout.createSequentialGroup()
+                        .addComponent(lblNguon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(lblVitri)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(107, 107, 107)
+                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddTL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdateTL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteTL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFindTL, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
         pnlTailieuLayout.setVerticalGroup(
             pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTailieuLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMatailieu)
-                    .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNguon)
-                    .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTentailieu)
-                    .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblVitri)
-                    .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLoai)
-                    .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTailieuLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMatailieu)
+                            .addComponent(txtMatailieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNguon)
+                            .addComponent(txtNguon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTentailieu)
+                            .addComponent(txtTentailieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblVitri)
+                            .addComponent(txtVitri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlTailieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLoai)
+                            .addComponent(txtLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTailieuLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddTL)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnUpdateTL)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnDeleteTL)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnFindTL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -316,6 +389,11 @@ public class MainFrameUI extends javax.swing.JFrame {
                 "Mã phiếu mượn", "Mã bạn đọc", "Mã tài liệu", "Ngày mượn", "Hoàn trả"
             }
         ));
+        tblPhieumuon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPhieumuonMouseClicked(evt);
+            }
+        });
         tblPhieumuon.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 tblPhieumuonKeyReleased(evt);
@@ -341,60 +419,107 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblMBD.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblMBD.setText("Mã bạn đọc");
 
-        chkHoantra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnFindPT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnFindPT.setText("Tìm");
+        btnFindPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindPTActionPerformed(evt);
+            }
+        });
+
+        btnAddPT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnAddPT.setText("Thêm");
+        btnAddPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPTActionPerformed(evt);
+            }
+        });
+
+        btnUpdatePT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnUpdatePT.setText("Sửa");
+        btnUpdatePT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdatePTActionPerformed(evt);
+            }
+        });
+
+        btnDeletePT.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnDeletePT.setText("Xoá");
+        btnDeletePT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePTActionPerformed(evt);
+            }
+        });
+
+        txtHoantra.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout pnlPhieumuonLayout = new javax.swing.GroupLayout(pnlPhieumuon);
         pnlPhieumuon.setLayout(pnlPhieumuonLayout);
         pnlPhieumuonLayout.setHorizontalGroup(
             pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPhieumuonLayout.createSequentialGroup()
-                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPhieumuonLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2))
-                    .addGroup(pnlPhieumuonLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblMTL)
-                            .addComponent(lblMahoadon)
-                            .addComponent(lblMBD))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(127, 127, 127)
-                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNgaymuon)
-                            .addComponent(lblHoantra))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chkHoantra))
-                        .addGap(0, 85, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(pnlPhieumuonLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblMTL)
+                    .addComponent(lblMahoadon)
+                    .addComponent(lblMBD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(127, 127, 127)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNgaymuon)
+                    .addComponent(lblHoantra))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHoantra, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAddPT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdatePT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeletePT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFindPT, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
         pnlPhieumuonLayout.setVerticalGroup(
             pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPhieumuonLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMahoadon)
-                    .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNgaymuon)
-                    .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
                 .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chkHoantra, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblHoantra)
-                        .addComponent(lblMBD)
-                        .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15)
-                .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMTL)
-                    .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPhieumuonLayout.createSequentialGroup()
+                        .addContainerGap(17, Short.MAX_VALUE)
+                        .addComponent(btnAddPT)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnUpdatePT)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnDeletePT)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnFindPT)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(pnlPhieumuonLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMahoadon)
+                            .addComponent(txtMahoadon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNgaymuon)
+                            .addComponent(txtNgaymuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHoantra)
+                            .addComponent(lblMBD)
+                            .addComponent(txtMBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoantra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(pnlPhieumuonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMTL)
+                            .addComponent(txtMTL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -447,6 +572,11 @@ public class MainFrameUI extends javax.swing.JFrame {
                 tblBandocMouseClicked(evt);
             }
         });
+        tblBandoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblBandocKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblBandoc);
         if (tblBandoc.getColumnModel().getColumnCount() > 0) {
             tblBandoc.getColumnModel().getColumn(5).setHeaderValue("Email");
@@ -473,27 +603,27 @@ public class MainFrameUI extends javax.swing.JFrame {
         lblNgaytao.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblNgaytao.setText("Ngày tạo");
 
-        btnUpdate.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        btnUpdate.setText("Sửa");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateBD.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnUpdateBD.setText("Sửa");
+        btnUpdateBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnUpdateBDActionPerformed(evt);
             }
         });
 
-        btnDelete.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        btnDelete.setText("Xoá");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteBD.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnDeleteBD.setText("Xoá");
+        btnDeleteBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnDeleteBDActionPerformed(evt);
             }
         });
 
-        btnFind.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        btnFind.setText("Tìm");
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
+        btnFindBD.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        btnFindBD.setText("Tìm");
+        btnFindBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
+                btnFindBDActionPerformed(evt);
             }
         });
 
@@ -544,9 +674,9 @@ public class MainFrameUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAddBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnUpdateBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFindBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47))
         );
         pnlBandocLayout.setVerticalGroup(
@@ -565,19 +695,19 @@ public class MainFrameUI extends javax.swing.JFrame {
                     .addComponent(txtTenbandoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEmail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate))
+                    .addComponent(btnUpdateBD))
                 .addGap(30, 30, 30)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNgaysinh)
                     .addComponent(txtNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNgaytao)
                     .addComponent(txtNgaytao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete))
+                    .addComponent(btnDeleteBD))
                 .addGap(30, 30, 30)
                 .addGroup(pnlBandocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCCCD)
                     .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFind))
+                    .addComponent(btnFindBD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -646,7 +776,7 @@ public class MainFrameUI extends javax.swing.JFrame {
         Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
 
         bandocDAO.insertBD(bd);
-        refreshTableBandoc();
+        refreshTable();
     }//GEN-LAST:event_btnAddBDActionPerformed
 
     private void txtMabandocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMabandocActionPerformed
@@ -657,7 +787,7 @@ public class MainFrameUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSDTActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void btnUpdateBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBDActionPerformed
         String id = txtMabandoc.getText();
         String ten = txtTenbandoc.getText();
         String ngaysinh = txtNgaysinh.getText();
@@ -668,40 +798,20 @@ public class MainFrameUI extends javax.swing.JFrame {
         Bandoc bd = new Bandoc(id, ten, ngaysinh, cccd, sdt, email, ngaytao);
 
         bandocDAO.updateBD(bd);
-        refreshTableBandoc();
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        refreshTable();
+    }//GEN-LAST:event_btnUpdateBDActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void btnDeleteBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBDActionPerformed
         String id = txtMabandoc.getText();
         bandocDAO.deleteBD(id);
         refreshForm();
-        refreshTableBandoc();
-    }//GEN-LAST:event_btnDeleteActionPerformed
+        refreshTable();
+    }//GEN-LAST:event_btnDeleteBDActionPerformed
 
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        if (txtTenbandoc.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Không tìm thấy", "Lỗi chỗ này", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String ten = txtTenbandoc.getText();
-            ArrayList<Bandoc> bandocList = bandocDAO.BandocList();
-            for (int i = 0; i < bandocList.size(); i++) {
-                if (bandocList.get(i).getTENBD().equalsIgnoreCase("BacHo")) {
-                    System.out.println("Đã tìm thấy");
-                    txtMabandoc.setText(bandocList.get(i).getMBD());
-                    txtTenbandoc.setText(bandocList.get(i).getTENBD());
-                    txtNgaysinh.setText(bandocList.get(i).getNGAYSINH());
-                    txtCCCD.setText(bandocList.get(i).getCCCD());
-                    txtSDT.setText(bandocList.get(i).getSDT());
-                    txtEmail.setText(bandocList.get(i).getEMAIL());
-                    txtNgaytao.setText(bandocList.get(i).getNGAYTAO());
-                    break;
-                }else{
-                    System.out.println("Không thấy");
-                }
-            }
-        }
-
-    }//GEN-LAST:event_btnFindActionPerformed
+    private void btnFindBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindBDActionPerformed
+        String tenbd = txtTenbandoc.getText();
+        bandocDAO.FindBD(tenbd);
+    }//GEN-LAST:event_btnFindBDActionPerformed
 
     private void tblBandocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBandocMouseClicked
         int rowIndex = tblBandoc.getSelectedRow();
@@ -716,6 +826,73 @@ public class MainFrameUI extends javax.swing.JFrame {
 
     private void tblPhieumuonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblPhieumuonKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
+            int rowIndex = tblPhieumuon.getSelectedRow();
+            txtMahoadon.setText(tblPhieumuon.getValueAt(rowIndex, 0).toString());
+            txtMBD.setText(tblPhieumuon.getValueAt(rowIndex, 1).toString());
+            txtMTL.setText(tblPhieumuon.getValueAt(rowIndex, 2).toString());
+            txtNgaymuon.setText(tblPhieumuon.getValueAt(rowIndex, 3).toString());
+            txtHoantra.setText(tblPhieumuon.getValueAt(rowIndex, 4).toString());
+        }
+    }//GEN-LAST:event_tblPhieumuonKeyReleased
+
+    private void btnFindTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindTLActionPerformed
+        String tentl = txtTentailieu.getText();
+        tailieuDAO.FindTL(tentl);
+    }//GEN-LAST:event_btnFindTLActionPerformed
+
+    private void btnAddTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTLActionPerformed
+        String id = txtMatailieu.getText();
+        String ten = txtTentailieu.getText();
+        String loai = txtLoai.getText();
+        String nguon = txtNguon.getText();
+        String vitri = txtVitri.getText();
+        Tailieu tl = new Tailieu(id, ten, loai, nguon, vitri);
+
+        tailieuDAO.insertPT(tl);
+        refreshTable();
+    }//GEN-LAST:event_btnAddTLActionPerformed
+
+    private void btnUpdateTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateTLActionPerformed
+        String id = txtMatailieu.getText();
+        String ten = txtTentailieu.getText();
+        String loai = txtLoai.getText();
+        String nguon = txtNguon.getText();
+        String vitri = txtVitri.getText();
+        Tailieu tl = new Tailieu(id, ten, loai, nguon, vitri);
+
+        tailieuDAO.updateTL(tl);
+        refreshTable();
+    }//GEN-LAST:event_btnUpdateTLActionPerformed
+
+    private void btnDeleteTLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTLActionPerformed
+        String id = txtMatailieu.getText();
+        tailieuDAO.deleteTL(id);
+        refreshForm();
+        refreshTable();
+    }//GEN-LAST:event_btnDeleteTLActionPerformed
+
+    private void tblTailieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTailieuMouseClicked
+        int rowIndex = tblTailieu.getSelectedRow();
+        txtMatailieu.setText(tblTailieu.getValueAt(rowIndex, 0).toString());
+        txtTentailieu.setText(tblTailieu.getValueAt(rowIndex, 1).toString());
+        txtLoai.setText(tblTailieu.getValueAt(rowIndex, 2).toString());
+        txtNguon.setText(tblTailieu.getValueAt(rowIndex, 3).toString());
+        txtVitri.setText(tblTailieu.getValueAt(rowIndex, 4).toString());
+    }//GEN-LAST:event_tblTailieuMouseClicked
+
+    private void tblTailieuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblTailieuKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
+            int rowIndex = tblTailieu.getSelectedRow();
+            txtMatailieu.setText(tblTailieu.getValueAt(rowIndex, 0).toString());
+            txtTentailieu.setText(tblTailieu.getValueAt(rowIndex, 1).toString());
+            txtLoai.setText(tblTailieu.getValueAt(rowIndex, 2).toString());
+            txtNguon.setText(tblTailieu.getValueAt(rowIndex, 3).toString());
+            txtVitri.setText(tblTailieu.getValueAt(rowIndex, 4).toString());
+        }
+    }//GEN-LAST:event_tblTailieuKeyReleased
+
+    private void tblBandocKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblBandocKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
             int rowIndex = tblBandoc.getSelectedRow();
             txtMabandoc.setText(tblBandoc.getValueAt(rowIndex, 0).toString());
             txtTenbandoc.setText(tblBandoc.getValueAt(rowIndex, 1).toString());
@@ -725,7 +902,52 @@ public class MainFrameUI extends javax.swing.JFrame {
             txtEmail.setText(tblBandoc.getValueAt(rowIndex, 5).toString());
             txtNgaytao.setText(tblBandoc.getValueAt(rowIndex, 6).toString());
         }
-    }//GEN-LAST:event_tblPhieumuonKeyReleased
+    }//GEN-LAST:event_tblBandocKeyReleased
+
+    private void btnFindPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindPTActionPerformed
+        String mahd = txtMahoadon.getText();
+        phieuthuDAO.FindPT(mahd);
+    }//GEN-LAST:event_btnFindPTActionPerformed
+
+    private void btnAddPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPTActionPerformed
+        String id = txtMahoadon.getText();
+        String idBD = txtMBD.getText();
+        String idTL = txtMTL.getText();
+        String ngaymuon = txtNgaymuon.getText();
+        String hoantra = txtHoantra.getText();
+        Phieuthu pt = new Phieuthu(id, idBD, idTL, ngaymuon, hoantra);
+
+        phieuthuDAO.insertPT(pt);
+        refreshTable();
+    }//GEN-LAST:event_btnAddPTActionPerformed
+
+    private void btnUpdatePTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePTActionPerformed
+        String id = txtMahoadon.getText();
+        String idBD = txtMBD.getText();
+        String idTL = txtMTL.getText();
+        String ngaymuon = txtNgaymuon.getText();
+        String hoantra = txtHoantra.getText();
+        Phieuthu pt = new Phieuthu(id, idBD, idTL, ngaymuon, hoantra);
+
+        phieuthuDAO.updatePT(pt);
+        refreshTable();
+    }//GEN-LAST:event_btnUpdatePTActionPerformed
+
+    private void btnDeletePTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePTActionPerformed
+        String id = txtMahoadon.getText();
+        phieuthuDAO.deletePT(id);
+        refreshForm();
+        refreshTable();
+    }//GEN-LAST:event_btnDeletePTActionPerformed
+
+    private void tblPhieumuonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieumuonMouseClicked
+        int rowIndex = tblPhieumuon.getSelectedRow();
+        txtMahoadon.setText(tblPhieumuon.getValueAt(rowIndex, 0).toString());
+        txtMBD.setText(tblPhieumuon.getValueAt(rowIndex, 1).toString());
+        txtMTL.setText(tblPhieumuon.getValueAt(rowIndex, 2).toString());
+        txtNgaymuon.setText(tblPhieumuon.getValueAt(rowIndex, 3).toString());
+        txtHoantra.setText(tblPhieumuon.getValueAt(rowIndex, 4).toString());
+    }//GEN-LAST:event_tblPhieumuonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -770,8 +992,14 @@ public class MainFrameUI extends javax.swing.JFrame {
     }
 
     public final void tableHeader() {
-        JTableHeader nw = tblBandoc.getTableHeader();
-        nw.setFont(new Font("Dialog", Font.PLAIN, 17));
+        JTableHeader bd = tblBandoc.getTableHeader();
+        bd.setFont(new Font("Dialog", Font.PLAIN, 17));
+
+        JTableHeader tl = tblTailieu.getTableHeader();
+        tl.setFont(new Font("Dialog", Font.PLAIN, 17));
+
+        JTableHeader pm = tblPhieumuon.getTableHeader();
+        pm.setFont(new Font("Dialog", Font.PLAIN, 17));
     }
 
     public final void refreshForm() {
@@ -782,6 +1010,18 @@ public class MainFrameUI extends javax.swing.JFrame {
         txtSDT.setText(null);
         txtEmail.setText(null);
         txtNgaytao.setText(null);
+
+        txtMatailieu.setText(null);
+        txtTentailieu.setText(null);
+        txtLoai.setText(null);
+        txtNguon.setText(null);
+        txtVitri.setText(null);
+
+        txtMahoadon.setText(null);
+        txtMBD.setText(null);
+        txtMTL.setText(null);
+        txtNgaymuon.setText(null);
+        txtHoantra.setText(null);
     }
 
     public void populateJtableBandoc() {
@@ -805,23 +1045,85 @@ public class MainFrameUI extends javax.swing.JFrame {
             tblBandoc.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
             tblBandoc.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
             tblBandoc.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+            tblBandoc.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
         }
     }
 
-    public void refreshTableBandoc() {
+    public void populateJtableTailieu() {
+        ArrayList<Tailieu> tailieuList = tailieuDAO.TailieuList();
+        String[] colNames = {"Mã", "Tên", "Loại", "Nguồn", "Vị trí"};
+        Object[][] rows = new Object[tailieuList.size()][5];
+
+        for (int i = 0; i < tailieuList.size(); i++) {
+            rows[i][0] = tailieuList.get(i).getMTL();
+            rows[i][1] = tailieuList.get(i).getTENTL();
+            rows[i][2] = tailieuList.get(i).getLOAI();
+            rows[i][3] = tailieuList.get(i).getNGUON();
+            rows[i][4] = tailieuList.get(i).getVITRI();
+
+            myModel mmd = new myModel(colNames, rows);
+            tblTailieu.setModel(mmd);
+            tblTailieu.setRowHeight(40);
+            tblTailieu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            tblTailieu.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+            tblTailieu.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+            tblTailieu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+            tblTailieu.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        }
+    }
+
+    public void populateJtablePhieuthu() {
+        ArrayList<Phieuthu> phieuthuList = phieuthuDAO.PhieuthuList();
+        String[] colNames = {"Mã phiếu mượn", "Mã bạn đọc", "Mã tài liệu", "Ngày mượn", "Hoàn trả"};
+        Object[][] rows = new Object[phieuthuList.size()][5];
+
+        for (int i = 0; i < phieuthuList.size(); i++) {
+            rows[i][0] = phieuthuList.get(i).getMHD();
+            rows[i][1] = phieuthuList.get(i).getMBD();
+            rows[i][2] = phieuthuList.get(i).getMTL();
+            rows[i][3] = phieuthuList.get(i).getNGAYMUON();
+            rows[i][4] = phieuthuList.get(i).getHOANTRA();
+
+            myModel mmd = new myModel(colNames, rows);
+            tblPhieumuon.setModel(mmd);
+            tblPhieumuon.setRowHeight(40);
+            tblPhieumuon.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+            tblPhieumuon.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+            tblPhieumuon.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+            tblPhieumuon.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+            tblPhieumuon.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        }
+    }
+
+    public void refreshTable() {
         tblBandoc.setModel(new DefaultTableModel());
         populateJtableBandoc();
+
+        tblTailieu.setModel(new DefaultTableModel());
+        populateJtableTailieu();
+
+        tblPhieumuon.setModel(new DefaultTableModel());
+        populateJtablePhieuthu();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddBD;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnAddPT;
+    private javax.swing.JButton btnAddTL;
+    private javax.swing.JButton btnDeleteBD;
+    private javax.swing.JButton btnDeletePT;
+    private javax.swing.JButton btnDeleteTL;
+    private javax.swing.JButton btnFindBD;
+    private javax.swing.JButton btnFindPT;
+    private javax.swing.JButton btnFindTL;
     private javax.swing.JButton btnQlbandoc;
     private javax.swing.JButton btnQlphieumuon;
     private javax.swing.JButton btnQltailieu;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JCheckBox chkHoantra;
+    private javax.swing.JButton btnUpdateBD;
+    private javax.swing.JButton btnUpdatePT;
+    private javax.swing.JButton btnUpdateTL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -852,25 +1154,26 @@ public class MainFrameUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlPhieumuon;
-    private javax.swing.JPanel pnlTailieu;
+    public static javax.swing.JPanel pnlTailieu;
     public static javax.swing.JTable tblBandoc;
     private javax.swing.JTable tblPhieumuon;
     private javax.swing.JTable tblTailieu;
-    private javax.swing.JTextField txtCCCD;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtLoai;
-    private javax.swing.JTextField txtMBD;
-    private javax.swing.JTextField txtMTL;
+    public static javax.swing.JTextField txtCCCD;
+    public static javax.swing.JTextField txtEmail;
+    public static javax.swing.JTextField txtHoantra;
+    public static javax.swing.JTextField txtLoai;
+    public static javax.swing.JTextField txtMBD;
+    public static javax.swing.JTextField txtMTL;
     public static javax.swing.JTextField txtMabandoc;
-    private javax.swing.JTextField txtMahoadon;
-    private javax.swing.JTextField txtMatailieu;
-    private javax.swing.JTextField txtNgaymuon;
-    private javax.swing.JTextField txtNgaysinh;
-    private javax.swing.JTextField txtNgaytao;
-    private javax.swing.JTextField txtNguon;
-    private javax.swing.JTextField txtSDT;
-    private javax.swing.JTextField txtTenbandoc;
-    private javax.swing.JTextField txtTentailieu;
-    private javax.swing.JTextField txtVitri;
+    public static javax.swing.JTextField txtMahoadon;
+    public static javax.swing.JTextField txtMatailieu;
+    public static javax.swing.JTextField txtNgaymuon;
+    public static javax.swing.JTextField txtNgaysinh;
+    public static javax.swing.JTextField txtNgaytao;
+    public static javax.swing.JTextField txtNguon;
+    public static javax.swing.JTextField txtSDT;
+    public static javax.swing.JTextField txtTenbandoc;
+    public static javax.swing.JTextField txtTentailieu;
+    public static javax.swing.JTextField txtVitri;
     // End of variables declaration//GEN-END:variables
 }

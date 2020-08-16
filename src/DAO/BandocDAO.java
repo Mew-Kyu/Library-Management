@@ -16,14 +16,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author nhlon
  */
 public class BandocDAO {
-    
+
     public void insertBD(Bandoc bd) {
         Connection con = Jdbc.getConnect();
         PreparedStatement ps;
@@ -89,15 +88,24 @@ public class BandocDAO {
 
     public void FindBD(String ten) {
         Connection con = Jdbc.getConnect();
+        ResultSet rs;
         PreparedStatement ps;
         try {
             ps = con.prepareStatement("SELECT * FROM BANDOC WHERE TENBD = ?");
             ps.setString(1, ten);
-            if (ps.executeUpdate() != 0) {
-            } else {
-                JOptionPane.showMessageDialog(null, "Lỗi", "Không tìm thấy", JOptionPane.ERROR_MESSAGE);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                MainFrameUI.txtMabandoc.setText(rs.getString("MBD"));
+                MainFrameUI.txtTenbandoc.setText(rs.getString("TENBD"));
+                MainFrameUI.txtNgaysinh.setText(rs.getString("NGAYSINH"));
+                MainFrameUI.txtCCCD.setText(rs.getString("CCCD"));
+                MainFrameUI.txtSDT.setText(rs.getString("SDT"));
+                MainFrameUI.txtEmail.setText(rs.getString("EMAIL"));
+                MainFrameUI.txtNgaytao.setText(rs.getString("NGAYTAO"));
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Khong tim thay du lieu !","Thong bao",JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(BandocDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

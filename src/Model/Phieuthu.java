@@ -9,17 +9,17 @@ package Model;
  *
  * @author nhlon
  */
-public class Hoadon {
+public class Phieuthu {
     String MHD;
     String MBD;
     String MTL;
     String NGAYMUON;
     String HOANTRA;
 
-    public Hoadon() {
+    public Phieuthu() {
     }
 
-    public Hoadon(String MHD, String MBD, String MTL, String NGAYMUON, String HOANTRA) {
+    public Phieuthu(String MHD, String MBD, String MTL, String NGAYMUON, String HOANTRA) {
         this.MHD = MHD;
         this.MBD = MBD;
         this.MTL = MTL;
@@ -43,7 +43,7 @@ public class Hoadon {
         return NGAYMUON;
     }
 
-    public String isHOANTRA() {
+    public String getHOANTRA() {
         return HOANTRA;
     }
 
